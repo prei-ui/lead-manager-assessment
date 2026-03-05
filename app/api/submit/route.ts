@@ -21,17 +21,15 @@ async function uploadToDrive(
   buffer: Buffer
 ) {
   const res = await drive.files.create({
-    requestBody: { name: fileName, parents: [folderId] },
     supportsAllDrives: true,
+    requestBody: { name: fileName, parents: [folderId] },
     media: { mimeType, body: bufferToStream(buffer) },
     fields: 'id, webViewLink',
-    supportsAllDrives: true,
   });
   await drive.permissions.create({
+    supportsAllDrives: true,
     fileId: res.data.id!,
     requestBody: { role: 'reader', type: 'anyone' },
-    supportsAllDrives: true,
-    supportsAllDrives: true,
   });
   return res.data.webViewLink!;
 }
